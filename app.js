@@ -128,6 +128,22 @@
   document.querySelectorAll(".revelar").forEach((el) => io.observe(el));
   document.querySelectorAll("[data-ano]").forEach((el) => (el.textContent = new Date().getFullYear()));
 
+  /* ── Carrusel de la carta (mòbil) ─────────────────────────────────────── */
+  const fila = document.querySelector("#carta .cartoes");
+  const punts = [...document.querySelectorAll(".carta-punts button")];
+  if (fila && punts.length) {
+    const cartes = [...fila.children];
+    const marcar = () => {
+      const x = fila.scrollLeft, max = fila.scrollWidth - fila.clientWidth;
+      let i = cartes.reduce((m, c, k) => (Math.abs(c.offsetLeft - fila.offsetLeft - x) < Math.abs(cartes[m].offsetLeft - fila.offsetLeft - x) ? k : m), 0);
+      if (max > 0 && x >= max - 4) i = cartes.length - 1;
+      punts.forEach((p, k) => p.setAttribute("aria-current", String(k === i)));
+    };
+    punts.forEach((p, k) => p.addEventListener("click", () => fila.scrollTo({ left: cartes[k].offsetLeft - fila.offsetLeft - parseFloat(getComputedStyle(fila).paddingLeft), behavior: "smooth" })));
+    fila.addEventListener("scroll", () => requestAnimationFrame(marcar), { passive: true });
+    marcar();
+  }
+
   /* ── WhatsApp ─────────────────────────────────────────────────────────── */
   if (S.whatsapp) {
     const num = String(S.whatsapp.numero || "").replace(/\D/g, "");

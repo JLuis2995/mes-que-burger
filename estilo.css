@@ -305,3 +305,24 @@ p { margin: 0 0 1em; color: var(--texto-suave); text-wrap: pretty; }
     radial-gradient(120% 90% at 50% 45%, transparent 55%, rgb(0 0 0 / .45) 100%),
     linear-gradient(to bottom, transparent 55%, rgb(17 17 17 / .55) 82%, var(--fundo) 100%);
 }
+
+/* Carta al mòbil: carrusel lateral amb snap */
+.carta-punts { display: none; }
+@media (max-width: 760px) {
+  .secao--larga { grid-template-columns: minmax(0, 1fr); justify-items: stretch; }
+  .painel--cabecalho, .painel--nota { max-width: none; }
+  .cartoes {
+    display: flex; gap: 14px; overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter);
+    margin-inline: calc(-1 * var(--gutter)); padding: 4px var(--gutter) 8px;
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  }
+  .cartoes::-webkit-scrollbar { display: none; }
+  .cartoes .cartao { flex: 0 0 82%; scroll-snap-align: start; }
+  .cartoes .cartao:hover { transform: none; }
+  .carta-punts { display: flex; justify-content: center; align-items: center; gap: 8px; }
+  .carta-punts button { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 999px; background: var(--linha); cursor: pointer; transition: width .3s var(--ease), background .3s; }
+  .carta-punts button[aria-current="true"] { width: 26px; background: var(--acento); }
+  .carta-punts .lliscar { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--texto-suave); margin-left: 8px; }
+}
+@media (max-width: 760px) { .cartoes .cartao.revelar { opacity: 1; transform: none; } }
