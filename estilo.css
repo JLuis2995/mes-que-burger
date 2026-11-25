@@ -326,3 +326,13 @@ p { margin: 0 0 1em; color: var(--texto-suave); text-wrap: pretty; }
   .carta-punts .lliscar { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--texto-suave); margin-left: 8px; }
 }
 @media (max-width: 760px) { .cartoes .cartao.revelar { opacity: 1; transform: none; } }
+@media (max-width: 760px) {
+  .cartoes { touch-action: pan-x pan-y; }
+  .carta-punts { gap: 10px; }
+  .carta-punts .fletxa {
+    width: 42px; height: 42px; border-radius: 50%; background: none; border: 1px solid var(--acento);
+    color: var(--acento); font: 400 26px/1 var(--fonte-texto); display: grid; place-items: center; padding: 0 0 3px;
+  }
+  .carta-punts .fletxa:first-child { margin-right: 6px; }
+  .carta-punts .fletxa:last-child { margin-left: 6px; }
+}

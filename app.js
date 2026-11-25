@@ -130,7 +130,7 @@
 
   /* ── Carrusel de la carta (mòbil) ─────────────────────────────────────── */
   const fila = document.querySelector("#carta .cartoes");
-  const punts = [...document.querySelectorAll(".carta-punts button")];
+  const punts = [...document.querySelectorAll(".carta-punts button:not(.fletxa)")];
   if (fila && punts.length) {
     const cartes = [...fila.children];
     const marcar = () => {
@@ -141,6 +141,11 @@
     };
     punts.forEach((p, k) => p.addEventListener("click", () => fila.scrollTo({ left: cartes[k].offsetLeft - fila.offsetLeft - parseFloat(getComputedStyle(fila).paddingLeft), behavior: "smooth" })));
     fila.addEventListener("scroll", () => requestAnimationFrame(marcar), { passive: true });
+    const anar = (k) => { k = Math.max(0, Math.min(cartes.length - 1, k)); fila.scrollTo({ left: cartes[k].offsetLeft - fila.offsetLeft - parseFloat(getComputedStyle(fila).paddingLeft), behavior: "smooth" }); };
+    document.querySelectorAll(".carta-punts .fletxa").forEach((b) => b.addEventListener("click", () => {
+      const actual = punts.findIndex((p) => p.getAttribute("aria-current") === "true");
+      anar(actual + Number(b.dataset.dir));
+    }));
     marcar();
   }
 
